@@ -54,7 +54,7 @@ void foo_library::counter_example(const std::string &name)
     double val = (rand() % 700) + 1.1;
     // double_counter->Add(val, labelkva);
     double_counter->Add(val);
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::milliseconds(15000));
   }
 }
 
