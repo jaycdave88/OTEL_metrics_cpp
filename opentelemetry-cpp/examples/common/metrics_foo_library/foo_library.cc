@@ -46,10 +46,13 @@ void foo_library::counter_example(const std::string &name)
   auto provider                               = metrics_api::Provider::GetMeterProvider();
   nostd::shared_ptr<metrics_api::Meter> meter = provider->GetMeter(name, "1.2.0");
   auto double_counter                         = meter->CreateDoubleCounter(counter_name);
+  // std::map<std::string, std::string> labels = {{"test", "value"}};
+  // auto labelkva = opentelemetry::common::KeyValueIterableView<decltype(labels)>{labels};
 
   while (true)
   {
     double val = (rand() % 700) + 1.1;
+    // double_counter->Add(val, labelkva);
     double_counter->Add(val);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }

@@ -9,20 +9,62 @@ receivers:
           allowed_origins: "*"
   hostmetrics:
     scrapers:
+      cpu:
+      disk:
+      filesystem:
       load:
       memory:
       network:
 processors:
-    batch:
+  batch:
+  metricstransform:
+    transforms:
+    - include: .*
+      match_type: regexp
+      action: update
+      operations:
+        action: add_label
+        new_label: tool
+        new_value: analyzer
+    - include: .*
+      match_type: regexp
+      action: update
+      operations:
+        action: add_label
+        new_label: product
+        new_value: oneapi_compiler
+    - include: .*
+      match_type: regexp
+      action: update
+      operations:
+        action: add_label
+        new_label: service
+        new_value: metrics_simple
+    - include: .*
+      match_type: regexp
+      action: update
+      operations:
+        action: add_label
+        new_label: source
+        new_value: engineer
+    - include: .*
+      match_type: regexp
+      action: update
+      operations:
+        action: add_label
+        new_label: source
+        new_value: build_tool      
 exporters:
+  logging: 
+    loglevel: debug
   datadog:
     api:
-      key: _API_KEY_
+      key: _DD_API_KEY_
 service:
   pipelines:
     metrics:
       receivers: [otlp, hostmetrics]
-      processors: [batch]
+      processors: [metricstransform, batch]
       exporters: [datadog]
     traces: 
       receivers: [otlp]

@@ -92,14 +92,14 @@ int main(int argc, char **argv)
   if (argc >= 2)
   {
     example_type = argv[1];
-    std::map<std::string, std::string> labels = {{"key", "value"}};
-    auto labelkv = common::KeyValueIterableView<decltype(labels)>{labels};
   }
 
-  std::string name{"ostream_metric_example"};
+  std::string name{"hello_world_successful_runs_count"};
 
   initMetrics(name);
-  // foo_library::counter_example(name);
+  
+  //foo_library::counter_example(name);
+
   if (example_type == "counter")
   {
     foo_library::counter_example(name);
