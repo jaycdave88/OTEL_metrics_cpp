@@ -38,13 +38,6 @@ processors:
       action: update
       operations:
         action: add_label
-        new_label: service
-        new_value: metrics_simple
-    - include: .*
-      match_type: regexp
-      action: update
-      operations:
-        action: add_label
         new_label: source
         new_value: engineer
     - include: .*
@@ -55,17 +48,21 @@ processors:
         new_label: source
         new_value: build_tool      
 exporters:
-  logging: 
-    loglevel: debug
+  # logging:
+  #   loglevel: debug
   datadog:
     api:
       key: _DD_API_KEY_
 service:
+  # telemetry:
+  #   logs:
+  #     level: debug
   pipelines:
     metrics:
       receivers: [otlp, hostmetrics]
       processors: [metricstransform, batch]
+      # exporters: [datadog, logging]
       exporters: [datadog]
-    traces: 
-      receivers: [otlp]
-      exporters: [datadog]
+    # traces: 
+    #   receivers: [otlp]
+    #   exporters: [datadog, logging]

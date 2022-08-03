@@ -20,6 +20,7 @@ WORKDIR /opentelemetry-cpp/
 COPY opentelemetry-cpp /opentelemetry-cpp
 COPY run.sh /
 RUN chmod +x /run.sh
+ENV OTEL_RESOURCE_ATTRIBUTES="service.name=metrics_simple"
 
 RUN [ "bazel", "build", "//examples/metrics_simple:metrics_ostream_example" ]
 
